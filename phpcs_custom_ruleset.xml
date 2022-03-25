@@ -79,6 +79,7 @@
         <exclude name="SlevomatCodingStandard.Commenting.DocCommentSpacing"/>
         <exclude name="SlevomatCodingStandard.Commenting.RequireOneLineDocComment"/>
         <exclude name="SlevomatCodingStandard.Commenting.UselessInheritDocComment"/>
+        <exclude name="SlevomatCodingStandard.Commenting.UselessInheritDocComment"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.DisallowEmpty"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.DisallowNullSafeObjectOperator"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.DisallowShortTernaryOperator"/>
@@ -87,6 +88,7 @@
         <exclude name="SlevomatCodingStandard.ControlStructures.RequireMultiLineTernaryOperator"/>
         <exclude name="SlevomatCodingStandard.ControlStructures.RequireYodaComparison"/>
         <exclude name="SlevomatCodingStandard.Files.TypeNameMatchesFileName"/>
+        <exclude name="SlevomatCodingStandard.Functions.DisallowNamedArguments"/>
         <exclude name="SlevomatCodingStandard.Functions.DisallowArrowFunction"/>
         <exclude name="SlevomatCodingStandard.Functions.DisallowTrailingCommaInCall"/>
         <exclude name="SlevomatCodingStandard.Functions.DisallowTrailingCommaInDeclaration"/>
