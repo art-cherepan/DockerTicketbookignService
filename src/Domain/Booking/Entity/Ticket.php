@@ -6,7 +6,7 @@ use App\Domain\Booking\Repository\TicketRepository;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\ManyToOne;
 use Symfony\Component\Uid\Uuid;
 
 #[Entity(repositoryClass: TicketRepository::class)]
@@ -16,7 +16,7 @@ final class Ticket
         #[Id]
         #[Column(type: 'uuid')]
         private Uuid $id,
-        #[OneToOne(targetEntity: 'Session')]
+        #[ManyToOne(targetEntity: 'Session')]
         private Session $session,
     ) {}
 
