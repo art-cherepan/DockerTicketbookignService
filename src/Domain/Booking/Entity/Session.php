@@ -6,6 +6,7 @@ use App\Domain\Booking\Repository\SessionRepository;
 use App\Exception\NonFreeTicketsException;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
@@ -16,7 +17,7 @@ use Symfony\Component\Uid\Uuid;
 final class Session
 {
     #[OneToMany(mappedBy: 'session', targetEntity: 'Ticket', cascade: ['persist', 'remove'], orphanRemoval: true)]
-    private ArrayCollection $tickets;
+    private Collection $tickets;
 
     public function __construct(
         #[Id]
@@ -72,9 +73,9 @@ final class Session
     {
         $tickets = [];
 
-        for ($i = 0; $i < count($this->ticketCount); $i++) {
-            $ticket = new Ticket(new Uuid(), $this);
-            $ticket[] = $ticket;
+        for ($i = 0; $i < $this->ticketCount; $i++) {
+            $ticket = new Ticket(Uuid::v4(), $this);
+            $tickets[] = $ticket;
         }
 
         return new ArrayCollection($tickets);
