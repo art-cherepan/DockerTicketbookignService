@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repository;
+namespace App\Domain\Booking\Repository;
 
 use App\Domain\Booking\Entity\BookedTicketRecord;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

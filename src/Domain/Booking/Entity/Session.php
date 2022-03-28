@@ -2,40 +2,40 @@
 
 namespace App\Domain\Booking\Entity;
 
-use App\Domain\Booking\Entity\Collections\TicketCollection;
+use App\Domain\Booking\Repository\SessionRepository;
 use App\Exception\NonFreeTicketsException;
-use App\Repository\SessionRepository;
-use DateTime;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\OneToMany;
 use Symfony\Component\Uid\Uuid;
 
 #[Entity(repositoryClass: SessionRepository::class)]
 final class Session
 {
-    private TicketCollection $tickets;
+    #[OneToMany(mappedBy: 'session', targetEntity: 'Ticket', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    private ArrayCollection $tickets;
 
     public function __construct(
         #[Id]
-        #[Column(unique: true)]
-        private string $id,
-        #[Column(type: 'integer', nullable: false)]
-        private int $numberOfTickets,
+        #[Column(type: 'uuid')]
+        private Uuid $id,
         #[Column(nullable: false)]
         private string $filmName,
-        #[Column(type: 'datetime', nullable: false)]
-        private DateTime $date,
-        #[Column(type: 'datetime', nullable: false)]
-        private DateTime $startTime,
-        #[Column(type: 'datetime', nullable: false)]
-        private DateTime $endTime,
+        #[Column(type: 'datetime_immutable', nullable: false)]
+        private DateTimeImmutable $date,
+        #[Column(type: 'datetime_immutable', nullable: false)]
+        private DateTimeImmutable $startTime,
+        #[Column(type: 'datetime_immutable', nullable: false)]
+        private DateTimeImmutable $endTime,
+        private int $ticketCount,
     ) {
-        $this->tickets = $this->createTickets($this->numberOfTickets);
+        $this->tickets = $this->createTickets();
     }
 
-    public function getId(): string
+    public function getId(): Uuid
     {
         return $this->id;
     }
@@ -62,32 +62,27 @@ final class Session
 
     public function bookTicket(Client $client, Ticket $ticket): BookedTicketRecord
     {
-        self::assertSessionHasAvailableTickets($this);
-
-        $this->tickets = $this->getTickets()->withoutTicket($ticket);
+        $this->assertSessionHasAvailableTickets();
+        $this->tickets->removeElement($ticket);
 
         return new BookedTicketRecord(Uuid::v4(), $client, $this, $ticket);
     }
 
-    public function getTickets(): TicketCollection
-    {
-        return $this->tickets;
-    }
-
-    private function createTickets(int $numberOfTickets): TicketCollection
+    private function createTickets(): ArrayCollection
     {
         $tickets = [];
 
-        for ($i = 0; $i < $numberOfTickets; $i++) {
-            $tickets[] = new Ticket(Uuid::v4(), $this);
+        for ($i = 0; $i < count($this->ticketCount); $i++) {
+            $ticket = new Ticket(new Uuid(), $this);
+            $ticket[] = $ticket;
         }
 
-        return new TicketCollection($tickets);
+        return new ArrayCollection($tickets);
     }
 
-    private static function assertSessionHasAvailableTickets(Session $session): void
+    private function assertSessionHasAvailableTickets(): void
     {
-        if (!$session->getTickets()->count()) {
+        if (!$this->tickets->count()) {
             throw new NonFreeTicketsException();
         }
     }

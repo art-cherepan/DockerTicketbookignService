@@ -26,6 +26,7 @@
         "symfony/http-client": "6.0.*",
         "symfony/intl": "6.0.*",
         "symfony/mailer": "6.0.*",
+        "symfony/maker-bundle": "^1.38",
         "symfony/messenger": "6.0.*",
         "symfony/mime": "6.0.*",
         "symfony/monolog-bundle": "^3.1",
@@ -48,19 +49,19 @@
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "friendsofphp/php-cs-fixer": "^3.6",
+        "phpro/grumphp": "^1.7",
         "phpunit/phpunit": "^9.5",
+        "sebastian/phpcpd": "^6.0",
+        "slevomat/coding-standard": "^7.0",
+        "squizlabs/php_codesniffer": "^3.6",
         "symfony/browser-kit": "6.0.*",
         "symfony/css-selector": "6.0.*",
         "symfony/debug-bundle": "6.0.*",
-        "symfony/maker-bundle": "^1.0",
         "symfony/phpunit-bridge": "^6.0",
         "symfony/stopwatch": "6.0.*",
-        "symfony/web-profiler-bundle": "6.0.*",
-        "friendsofphp/php-cs-fixer": "^3.6",
-        "phpro/grumphp": "^1.7",
-        "sebastian/phpcpd": "^6.0",
-        "slevomat/coding-standard": "^7.0",
-        "squizlabs/php_codesniffer": "^3.6"
+        "symfony/web-profiler-bundle": "6.0.*"
     },
     "config": {
         "allow-plugins": {

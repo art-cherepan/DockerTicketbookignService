@@ -2,24 +2,25 @@
 
 namespace App\Domain\Booking\Entity;
 
-use App\Repository\TicketRepository;
+use App\Domain\Booking\Repository\TicketRepository;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToOne;
+use Symfony\Component\Uid\Uuid;
 
 #[Entity(repositoryClass: TicketRepository::class)]
 final class Ticket
 {
     public function __construct(
         #[Id]
-        #[Column(unique: true)]
-        private string $id,
-        #[ManyToOne(targetEntity: Session::class)]
+        #[Column(type: 'uuid')]
+        private Uuid $id,
+        #[OneToOne(targetEntity: 'Session')]
         private Session $session,
     ) {}
 
-    public function getId(): string
+    public function getId(): Uuid
     {
         return $this->id;
     }

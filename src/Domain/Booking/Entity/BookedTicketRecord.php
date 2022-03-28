@@ -4,20 +4,21 @@ namespace App\Domain\Booking\Entity;
 
 use App\Domain\Booking\Entity\ValueObject\ClientName;
 use App\Domain\Booking\Entity\ValueObject\ClientPhoneNumber;
-use App\Repository\BookedTickedRecordRepository;
+use App\Domain\Booking\Repository\BookedTickedRecordRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\OneToOne;
+use Symfony\Component\Uid\Uuid;
 
 #[Entity(repositoryClass: BookedTickedRecordRepository::class)]
 final class BookedTicketRecord
 {
     public function __construct(
         #[Id]
-        #[Column(unique: true)]
-        private string $id,
+        #[Column(type: 'uuid')]
+        private Uuid $id,
         #[OneToOne(targetEntity: Client::class)]
         private Client $client,
         #[OneToOne(targetEntity: Session::class)]
@@ -26,7 +27,7 @@ final class BookedTicketRecord
         private Ticket $ticket,
     ) {}
 
-    public function getId(): string
+    public function getId(): Uuid
     {
         return $this->id;
     }
@@ -46,7 +47,7 @@ final class BookedTicketRecord
         return $this->session->getEndTime();
     }
 
-    public function getFilmName(): string
+    public function getSessionFilmName(): string
     {
         return $this->session->getFilmName();
     }
@@ -59,5 +60,10 @@ final class BookedTicketRecord
     public function getClientPhoneNumber(): ClientPhoneNumber
     {
         return $this->client->getPhoneNumber();
+    }
+
+    public function getTicket(): Ticket
+    {
+        return $this->ticket;
     }
 }
