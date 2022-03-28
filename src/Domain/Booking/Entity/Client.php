@@ -4,25 +4,26 @@ namespace App\Domain\Booking\Entity;
 
 use App\Domain\Booking\Entity\ValueObject\ClientName;
 use App\Domain\Booking\Entity\ValueObject\ClientPhoneNumber;
-use App\Repository\ClientRepository;
+use App\Domain\Booking\Repository\ClientRepository;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
+use Symfony\Component\Uid\Uuid;
 
 #[Entity(repositoryClass: ClientRepository::class)]
 final class Client
 {
     public function __construct(
         #[Id]
-        #[Column(unique: true)]
-        private string $id,
-        #[Column(nullable: false)]
+        #[Column(type: 'uuid')]
+        private Uuid $id,
+        #[Column(type: 'clientname', nullable: false)]
         private ClientName $clientName,
-        #[Column(nullable: false)]
+        #[Column(type: 'clientphonenumber', nullable: false)]
         private ClientPhoneNumber $phoneNumber,
     ) {}
 
-    public function getId(): string
+    public function getId(): Uuid
     {
         return $this->id;
     }

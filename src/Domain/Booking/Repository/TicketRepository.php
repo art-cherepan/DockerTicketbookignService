@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Repository;
+namespace App\Domain\Booking\Repository;
 
-use App\Domain\Booking\Entity\Session;
+use App\Domain\Booking\Entity\Ticket;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-class SessionRepository extends ServiceEntityRepository
+class TicketRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Session::class);
+        parent::__construct($registry, Ticket::class);
     }
 }
