@@ -9,23 +9,24 @@ use DateTimeImmutable;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToOne;
 use Symfony\Component\Uid\Uuid;
 
 #[Entity(repositoryClass: BookedTickedRecordRepository::class)]
-final class BookedTicketRecord
+class BookedTicketRecord
 {
     public function __construct(
         #[Id]
         #[Column(type: 'uuid')]
         private Uuid $id,
-        #[OneToOne(targetEntity: Client::class)]
+        #[ManyToOne(targetEntity: Client::class, cascade: ['persist'], inversedBy: 'id')]
         private Client $client,
-        #[OneToOne(targetEntity: Session::class)]
-        private Session $session,
         #[OneToOne(targetEntity: Ticket::class)]
         private Ticket $ticket,
-    ) {}
+    ) {
+        $ticket->book($this);
+    }
 
     public function getId(): Uuid
     {
@@ -34,22 +35,22 @@ final class BookedTicketRecord
 
     public function getSessionDate(): DateTimeImmutable
     {
-        return $this->session->getDate();
+        return $this->ticket->getSession()->getDate();
     }
 
     public function getSessionStartTime(): DateTimeImmutable
     {
-        return $this->session->getStartTime();
+        return $this->ticket->getSession()->getStartTime();
     }
 
     public function getSessionEndTime(): DateTimeImmutable
     {
-        return $this->session->getEndTime();
+        return $this->ticket->getSession()->getEndTime();
     }
 
     public function getSessionFilmName(): string
     {
-        return $this->session->getFilmName();
+        return $this->ticket->getSession()->getFilmName();
     }
 
     public function getClientName(): ClientName

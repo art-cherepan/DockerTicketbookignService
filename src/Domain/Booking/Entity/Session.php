@@ -12,9 +12,10 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\OneToMany;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Uid\UuidV4;
 
 #[Entity(repositoryClass: SessionRepository::class)]
-final class Session
+class Session
 {
     #[OneToMany(mappedBy: 'session', targetEntity: 'Ticket', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $tickets;
@@ -61,12 +62,34 @@ final class Session
         return $this->filmName;
     }
 
-    public function bookTicket(Client $client, Ticket $ticket): BookedTicketRecord
+    public function getTickets(): Collection
+    {
+        return $this->tickets;
+    }
+
+    public function bookTicket(Client $client, Ticket $bookedTicket): void
     {
         $this->assertSessionHasAvailableTickets();
-        $this->tickets->removeElement($ticket);
+        $uuid = new UuidV4();
+        $bookedTicketRecord = new BookedTicketRecord($uuid, $client, $bookedTicket);
+        $bookedTicket->book($bookedTicketRecord);
+    }
 
-        return new BookedTicketRecord(Uuid::v4(), $client, $this, $ticket);
+    public function getFreeTicket(): Ticket
+    {
+        $freeTicket = null;
+
+        foreach ($this->tickets as $ticket) {
+            if ($ticket->isBooked()) {
+                continue;
+            }
+
+            $freeTicket = $ticket;
+
+            break;
+        }
+
+        return $freeTicket;
     }
 
     private function createTickets(): ArrayCollection
