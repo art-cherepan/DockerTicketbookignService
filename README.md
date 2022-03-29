@@ -4,4 +4,4 @@
 2. Перейдите в директорию `docker` командой `cd docker`
 3. Запустите docker контейнеры командой `docker-compose up -d --build`
 4. Выполните загрузку нербходимых пакетов командой `composer update`
-5. Перейдите на [страницу приветствия Symfony](http://localhost/main)
+5. Перейдите на [страницу бронирования билетов](http://localhost/main)
