@@ -33,4 +33,23 @@ class SessionRepository extends ServiceEntityRepository
             ],
         );
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSessionsInfo(): array
+    {
+        $sessionsInfo = [];
+
+        $sessions = $this->findAll();
+
+        foreach ($sessions as $session) {
+            $key = $session->getId()->toRfc4122();
+            $value = $session->getFilmName() . ' Начало фильма: ' . gmdate('Y-m-d H:i:s', $session->getStartTime()->getTimeStamp());
+
+            $sessionsInfo[$key] = $value;
+        }
+
+        return array_flip($sessionsInfo);
+    }
 }

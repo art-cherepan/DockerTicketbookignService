@@ -24,18 +24,7 @@ class MainController extends AbstractController
         SessionRepository $sessionRepository,
         ClientRepository $clientRepository,
     ): Response {
-        $sessionsInfo = [];
-
-        $sessions = $sessionRepository->findAll();
-
-        foreach ($sessions as $session) {
-            $key = $session->getId()->toRfc4122();
-            $value = $session->getFilmName() . ' Начало фильма: ' . gmdate('Y-m-d H:i:s', $session->getStartTime()->getTimeStamp());
-
-            $sessionsInfo[$key] = $value;
-        }
-
-        $sessionsInfo = array_flip($sessionsInfo);
+        $sessionsInfo = $sessionRepository->getSessionsInfo();
 
         $form = $this->createForm(InputDataForm::class, $sessionsInfo);
         $form->handleRequest($request);
