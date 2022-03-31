@@ -2,28 +2,23 @@
 
 namespace App\Domain\Booking\Command;
 
-use Symfony\Component\Uid\Uuid;
+use App\Domain\Booking\Entity\Session;
 
 class BookTicketCommand
 {
-    public function __construct(
-        public Uuid $sessionUuid,
-        public string $clientName,
-        public string $clientPhoneNumber,
-    ) {}
+    public ?Session $session;
 
-    public function getSessionUuid(): Uuid
-    {
-        return $this->sessionUuid;
-    }
+    #[Assert\Regex(
+        pattern: '/^[а-яёА-ЯЁ\s]+$/u',
+        match: true,
+        message: 'The name must contain only Russian letters.',
+    )]
+    public string $clientName;
 
-    public function getClientName(): string
-    {
-        return $this->clientName;
-    }
-
-    public function getClientPhoneNumber(): string
-    {
-        return $this->clientPhoneNumber;
-    }
+    #[Assert\Regex(
+        pattern: '/^[0-9]{10,10}+$/',
+        match: true,
+        message: 'Phone number must contain 10 digits.',
+    )]
+    public string $clientPhoneNumber;
 }
