@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Command;
+namespace App\Domain\Booking\Command;
 
 use App\Domain\Booking\Entity\Client;
 use App\Domain\Booking\Entity\Session;

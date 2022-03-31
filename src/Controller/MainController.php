@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Command\BookTicketCommand;
+use App\Domain\Booking\Command\BookTicketCommand;
 use App\Domain\Booking\Entity\ValueObject\ClientName;
 use App\Domain\Booking\Entity\ValueObject\ClientPhoneNumber;
 use App\Domain\Booking\Repository\ClientRepository;

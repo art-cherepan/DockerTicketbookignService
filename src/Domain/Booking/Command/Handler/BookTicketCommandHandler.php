@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Command\Handler;
+namespace App\Domain\Booking\Command\Handler;
 
-use App\Command\BookTicketCommand;
+use App\Domain\Booking\Command\BookTicketCommand;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
