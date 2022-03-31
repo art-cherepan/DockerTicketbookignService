@@ -2,8 +2,8 @@ doctrine:
     dbal:
         url: '%env(resolve:DATABASE_URL)%'
         types:
-            clientname: App\Domain\Booking\Type\ClientNameType
-            clientphonenumber: App\Domain\Booking\Type\ClientPhoneNumberType
+            client_name: App\Domain\Booking\Type\ClientNameType
+            client_phone_number: App\Domain\Booking\Type\ClientPhoneNumberType
 
         # IMPORTANT: You MUST configure your server version,
         # either here or in the DATABASE_URL env var (see .env file)

@@ -8,7 +8,7 @@ use Doctrine\DBAL\Types\Type;
 
 final class ClientPhoneNumberType extends Type
 {
-    private const MYTYPE = 'clientphonenumber';
+    private const GET_TYPE_NAME = 'client_phone_number';
 
     /**
      * {@inheritdoc}
@@ -44,6 +44,6 @@ final class ClientPhoneNumberType extends Type
 
     public function getName(): string
     {
-        return self::MYTYPE;
+        return self::GET_TYPE_NAME;
     }
 }
