@@ -7,5 +7,5 @@
 5. Перейдите в контейнер командой `docker exec -itu1000 resolventa_backend_internship_php-fpm_1 bash`
 6. Выполните загрузку необходимых пакетов командой `composer install`
 7. Выполните миграцию командой `php bin/console doctrine:migrations:migrate`
-8. Загрузите фикстуры командой `doctrine:fixtures:load`
+8. Загрузите фикстуры командой `php bin/console doctrine:fixtures:load`
 9. Перейдите на [страницу бронирования билетов](http://localhost/main)
