@@ -14,9 +14,9 @@ services:
         resource: '../src/Controller'
         tags: [ 'controller.service_arguments' ]
 
-    App\Command\Handler\:
+    App\Domain\Booking\Command\Handler\:
         autoconfigure: false
-        resource: '../src/Command/Handler'
+        resource: '../src/Domain/Booking/Command/Handler'
         tags: [ { name: messenger.message_handler, bus: command.bus } ]
 
     # makes classes in src/ available to be used as services

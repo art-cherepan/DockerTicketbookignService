@@ -17,9 +17,9 @@ final class Client
         #[Id]
         #[Column(type: 'uuid')]
         private Uuid $id,
-        #[Column(type: 'clientname', nullable: false)]
+        #[Column(type: 'client_name', nullable: false)]
         private ClientName $clientName,
-        #[Column(type: 'clientphonenumber', nullable: false)]
+        #[Column(type: 'client_phone_number', nullable: false)]
         private ClientPhoneNumber $phoneNumber,
     ) {}
 
