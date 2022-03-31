@@ -80,6 +80,8 @@ class Session
         $freeTicket = null;
 
         foreach ($this->tickets as $ticket) {
+            assert($ticket instanceof Ticket);
+
             if ($ticket->isBooked()) {
                 continue;
             }

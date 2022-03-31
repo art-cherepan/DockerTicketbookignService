@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Domain\Booking\Entity\Session;
 use App\Domain\Booking\Repository\SessionRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -21,6 +22,8 @@ class InputDataForm extends AbstractType
         $sessions = $sessionRepository->findAll();
 
         foreach ($sessions as $session) {
+            assert($session instanceof Session);
+
             $key = $session->getId()->toRfc4122();
             $value = $session->getFilmName() . ' Начало фильма: ' . gmdate('Y-m-d H:i:s', $session->getStartTime()->getTimeStamp());
 
