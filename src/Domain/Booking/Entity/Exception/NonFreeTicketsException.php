@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exception;
+namespace App\Domain\Booking\Entity\Exception;
 
 class NonFreeTicketsException extends \DomainException
 {

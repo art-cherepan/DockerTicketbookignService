@@ -2,7 +2,7 @@
 
 namespace App\Domain\Booking\Entity\ValueObject;
 
-use App\Exception\NonValidClientNameException;
+use App\Domain\Booking\Entity\Exception\NonValidClientNameException;
 
 final class ClientName
 {

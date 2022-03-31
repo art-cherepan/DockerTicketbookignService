@@ -2,7 +2,7 @@
 
 namespace App\Domain\Booking\Entity\ValueObject;
 
-use App\Exception\NonValidClientPhoneException;
+use App\Domain\Booking\Entity\Exception\NonValidClientPhoneException;
 
 final class ClientPhoneNumber
 {

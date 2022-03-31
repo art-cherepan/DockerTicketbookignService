@@ -2,8 +2,8 @@
 
 namespace App\Domain\Booking\Entity;
 
+use App\Domain\Booking\Entity\Exception\NonFreeTicketsException;
 use App\Domain\Booking\Repository\SessionRepository;
-use App\Exception\NonFreeTicketsException;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
