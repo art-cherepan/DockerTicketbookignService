@@ -84,7 +84,7 @@ class Session
 
     public function bookTicket(Client $client, Ticket $ticket): void
     {
-        $this->assertSessionHasAvailableTickets();
+        self::assertSessionHasAvailableTickets($this);
 
         $uuid = new UuidV4();
         $bookedTicketRecord = new BookedTicketRecord($uuid, $client, $ticket);
@@ -122,9 +122,9 @@ class Session
         return new ArrayCollection($tickets);
     }
 
-    private function assertSessionHasAvailableTickets(): void
+    private static function assertSessionHasAvailableTickets(Session $session): void
     {
-        if (!$this->tickets->count()) {
+        if ($session->tickets->count()) {
             throw new NonFreeTicketsException();
         }
     }
