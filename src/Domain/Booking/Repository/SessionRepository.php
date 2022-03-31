@@ -5,7 +5,6 @@ namespace App\Domain\Booking\Repository;
 use App\Domain\Booking\Entity\Session;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\Uid\Uuid;
 
 class SessionRepository extends ServiceEntityRepository
 {
@@ -16,21 +15,11 @@ class SessionRepository extends ServiceEntityRepository
 
     /**
      * {@inheritdoc}
+     *
+     * @return array<Session>
      */
-    public function findAll()
+    public function findAll(): array
     {
         return parent::findAll();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function findById(Uuid $uuid)
-    {
-        return $this->findBy(
-            [
-                'id' => $uuid,
-            ],
-        );
     }
 }

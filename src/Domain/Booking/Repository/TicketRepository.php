@@ -2,7 +2,6 @@
 
 namespace App\Domain\Booking\Repository;
 
-use App\Domain\Booking\Entity\Session;
 use App\Domain\Booking\Entity\Ticket;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,19 +15,11 @@ class TicketRepository extends ServiceEntityRepository
 
     /**
      * {@inheritdoc}
-     */
-    public function findAll()
-    {
-        return parent::findAll();
-    }
-
-    /**
+     *
      * @return array<Ticket>
      */
-    public function getTicketsBySession(Session $session): array
+    public function findAll(): array
     {
-        return $this->findBy([
-            'session' => $session,
-        ]);
+        return parent::findAll();
     }
 }
