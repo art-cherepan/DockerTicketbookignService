@@ -3,6 +3,7 @@
 namespace App\Domain\Booking\Command;
 
 use App\Domain\Booking\Entity\Session;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class BookTicketCommand
 {
