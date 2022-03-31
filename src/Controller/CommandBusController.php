@@ -24,7 +24,7 @@ class CommandBusController extends AbstractController
         SessionRepository $sessionRepository,
         ClientRepository $clientRepository,
     ): Response {
-        $sessionsInfo = $sessionRepository->getSessionsInfo();
+        $sessionsInfo = InputDataForm::getSessionsInfo($sessionRepository);
 
         $form = $this->createForm(InputDataForm::class, $sessionsInfo);
         $form->handleRequest($request);
