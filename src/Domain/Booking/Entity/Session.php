@@ -82,12 +82,13 @@ class Session
         return $this->tickets;
     }
 
-    public function bookTicket(Client $client, Ticket $bookedTicket): void
+    public function bookTicket(Client $client, Ticket $ticket): void
     {
         $this->assertSessionHasAvailableTickets();
+
         $uuid = new UuidV4();
-        $bookedTicketRecord = new BookedTicketRecord($uuid, $client, $bookedTicket);
-        $bookedTicket->book($bookedTicketRecord);
+        $bookedTicketRecord = new BookedTicketRecord($uuid, $client, $ticket);
+        $ticket->book($bookedTicketRecord);
     }
 
     public function getFreeTicket(): Ticket
