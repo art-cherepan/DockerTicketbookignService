@@ -7,7 +7,6 @@ use App\Domain\Booking\Entity\Client;
 use App\Domain\Booking\Entity\ValueObject\ClientName;
 use App\Domain\Booking\Entity\ValueObject\ClientPhoneNumber;
 use App\Domain\Booking\Repository\ClientRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Uid\UuidV4;
@@ -17,7 +16,6 @@ class BookTicketCommandHandler implements MessageHandlerInterface
     private ClientRepository $clientRepository;
 
     public function __construct(
-        private EntityManagerInterface $entityManager,
         private ManagerRegistry $managerRegistry,
     ) {
         $this->clientRepository = new ClientRepository($this->managerRegistry);
