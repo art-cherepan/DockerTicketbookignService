@@ -2,30 +2,28 @@
 
 namespace App\Domain\Booking\Command;
 
-use App\Domain\Booking\Entity\Client;
-use App\Domain\Booking\Entity\Session;
-use App\Domain\Booking\Entity\Ticket;
+use Symfony\Component\Uid\Uuid;
 
 class BookTicketCommand
 {
     public function __construct(
-        private Session $session,
-        private Client $client,
-        private Ticket $ticket,
+        public Uuid $sessionUuid,
+        public string $clientName,
+        public string $clientPhoneNumber,
     ) {}
 
-    public function getSession(): Session
+    public function getSessionUuid(): Uuid
     {
-        return $this->session;
+        return $this->sessionUuid;
     }
 
-    public function getClient(): Client
+    public function getClientName(): string
     {
-        return $this->client;
+        return $this->clientName;
     }
 
-    public function getTicket(): Ticket
+    public function getClientPhoneNumber(): string
     {
-        return $this->ticket;
+        return $this->clientPhoneNumber;
     }
 }
