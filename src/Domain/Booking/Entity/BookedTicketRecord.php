@@ -4,7 +4,6 @@ namespace App\Domain\Booking\Entity;
 
 use App\Domain\Booking\Entity\ValueObject\ClientName;
 use App\Domain\Booking\Entity\ValueObject\ClientPhoneNumber;
-use App\Domain\Booking\Repository\BookedTickedRecordRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -13,7 +12,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToOne;
 use Symfony\Component\Uid\Uuid;
 
-#[Entity(repositoryClass: BookedTickedRecordRepository::class)]
+#[Entity()]
 class BookedTicketRecord
 {
     public function __construct(
