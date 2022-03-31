@@ -17,23 +17,38 @@ use Symfony\Component\Uid\UuidV4;
 #[Entity(repositoryClass: SessionRepository::class)]
 class Session
 {
+    #[Id]
+    #[Column(type: 'uuid')]
+    private Uuid $id;
+
+    #[Column(nullable: false)]
+    private string $filmName;
+
+    #[Column(type: 'datetime_immutable', nullable: false)]
+    private DateTimeImmutable $date;
+
+    #[Column(type: 'datetime_immutable', nullable: false)]
+    private DateTimeImmutable $startTime;
+
+    #[Column(type: 'datetime_immutable', nullable: false)]
+    private DateTimeImmutable $endTime;
+
     #[OneToMany(mappedBy: 'session', targetEntity: 'Ticket', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $tickets;
 
     public function __construct(
-        #[Id]
-        #[Column(type: 'uuid')]
-        private Uuid $id,
-        #[Column(nullable: false)]
-        private string $filmName,
-        #[Column(type: 'datetime_immutable', nullable: false)]
-        private DateTimeImmutable $date,
-        #[Column(type: 'datetime_immutable', nullable: false)]
-        private DateTimeImmutable $startTime,
-        #[Column(type: 'datetime_immutable', nullable: false)]
-        private DateTimeImmutable $endTime,
+        Uuid $id,
+        string $filmName,
+        DateTimeImmutable $date,
+        DateTimeImmutable $startTime,
+        DateTimeImmutable $endTime,
         private int $ticketCount,
     ) {
+        $this->id = $id;
+        $this->filmName = $filmName;
+        $this->date = $date;
+        $this->startTime = $startTime;
+        $this->endTime = $endTime;
         $this->tickets = $this->createTickets();
     }
 
