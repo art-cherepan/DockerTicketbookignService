@@ -24,7 +24,7 @@ class InputDataForm extends AbstractType
         foreach ($sessions as $session) {
             assert($session instanceof Session);
 
-            $key = $session->getId()->toRfc4122();
+            $key = (string) $session->getId();
             $value = $session->getFilmName() . ' Начало фильма: ' . gmdate('Y-m-d H:i:s', $session->getStartTime()->getTimeStamp());
 
             $sessionsInfo[$key] = $value;
