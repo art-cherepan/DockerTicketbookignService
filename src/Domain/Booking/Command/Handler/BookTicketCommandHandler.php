@@ -45,13 +45,15 @@ class BookTicketCommandHandler implements MessageHandlerInterface
 
     private function getClient(ClientName $clientName, ClientPhoneNumber $clientPhoneNumber): Client
     {
-        $clients = $this->clientRepository->findBy([
+        $client = null;
+
+        $client = $this->clientRepository->findOneBy([
             'clientName' => $clientName,
             'phoneNumber' => $clientPhoneNumber,
         ]);
 
-        if (count($clients) > 0) {
-            return $clients[0];
+        if ($client !== null) {
+            return $client;
         }
             $uuid = new UuidV4();
 
