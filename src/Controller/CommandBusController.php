@@ -15,7 +15,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Uid\Uuid;
 
-class MainController extends AbstractController
+class CommandBusController extends AbstractController
 {
     #[Route('/main', name: 'main')]
     public function index(
