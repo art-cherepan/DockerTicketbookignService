@@ -124,7 +124,7 @@ class Session
 
     private static function assertSessionHasAvailableTickets(Session $session): void
     {
-        if ($session->tickets->count()) {
+        if ($session->tickets->count() === 0) {
             throw new NonFreeTicketsException();
         }
     }
