@@ -41,6 +41,6 @@ final class Ticket
 
     public function isBooked(): bool
     {
-        return assert($this->bookedTicketRecord instanceof BookedTicketRecord);
+        return $this->bookedTicketRecord instanceof BookedTicketRecord;
     }
 }
