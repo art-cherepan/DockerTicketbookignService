@@ -6,7 +6,7 @@ class NonFreeTicketsException extends \DomainException
 {
     public function __construct()
     {
-        $message = 'All tickets purchased.';
+        $message = 'Sorry, all tickets purchased :(';
 
         parent::__construct($message);
     }
