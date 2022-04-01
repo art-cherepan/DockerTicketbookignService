@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Booking\Type;
+namespace App\Doctrine\Type;
 
 use App\Domain\Booking\Entity\ValueObject\ClientPhoneNumber;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
