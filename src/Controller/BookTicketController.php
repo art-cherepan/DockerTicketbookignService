@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Domain\Booking\Command\BookTicketCommand;
 use App\Domain\Booking\Repository\SessionRepository;
-use App\Form\BookTicketForm;
+use App\Form\BookSessionFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +20,7 @@ class BookTicketController extends AbstractController
 
         $command = new BookTicketCommand();
 
-        $form = $this->createForm(BookTicketForm::class, $command, ['sessions' => $sessions]);
+        $form = $this->createForm(BookSessionFormType::class, $command, ['sessions' => $sessions]);
 
         $form->handleRequest($request);
 
