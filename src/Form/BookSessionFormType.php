@@ -17,6 +17,8 @@ class BookSessionFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        parent::buildForm($builder, $options);
+
         $sessions = $options['sessions'];
 
         $builder
@@ -37,6 +39,8 @@ class BookSessionFormType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefaults([
             'data_class' => BookTicketCommand::class,
             'sessions' => [],
