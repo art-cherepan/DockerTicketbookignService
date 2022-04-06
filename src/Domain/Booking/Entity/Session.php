@@ -52,26 +52,6 @@ class Session
         $this->tickets = $this->createTickets();
     }
 
-    public static function hasAFreeTicket(Session $session): bool
-    {
-        $tickets = $session->getTickets();
-
-        foreach ($tickets as $ticket) {
-            if ($ticket->isBooked() === false) {
-                return true;
-            }
-        }
-
-            return false;
-    }
-
-    public static function assertSessionHasAvailableTickets(Session $session): void
-    {
-        if (self::hasAFreeTicket($session) === false) {
-            throw new NonFreeTicketsException();
-        }
-    }
-
     public function getId(): Uuid
     {
         return $this->id;
@@ -128,5 +108,25 @@ class Session
         }
 
         return new ArrayCollection($tickets);
+    }
+
+    private function hasAFreeTicket(): bool
+    {
+        $tickets = $this->getTickets();
+
+        foreach ($tickets as $ticket) {
+            if ($ticket->isBooked() === false) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static function assertSessionHasAvailableTickets(Session $session): void
+    {
+        if ($session->hasAFreeTicket() === false) {
+            throw new NonFreeTicketsException();
+        }
     }
 }
