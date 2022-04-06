@@ -16,9 +16,9 @@ class BookTicketCommandHandler implements MessageHandlerInterface
     private ClientRepository $clientRepository;
 
     public function __construct(
-        private ManagerRegistry $managerRegistry,
+        ManagerRegistry $managerRegistry,
     ) {
-        $this->clientRepository = new ClientRepository($this->managerRegistry);
+        $this->clientRepository = new ClientRepository($managerRegistry);
     }
 
     /**
