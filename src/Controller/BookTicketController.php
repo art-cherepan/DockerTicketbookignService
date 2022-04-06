@@ -26,6 +26,11 @@ class BookTicketController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $commandBus->dispatch($command);
+
+            $this->addFlash(
+                'notice',
+                'Вы успешно забронировали билет.',
+            );
         }
 
         return $this->render('index.html.twig', [
