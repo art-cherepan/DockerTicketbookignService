@@ -12,14 +12,14 @@ use Symfony\Component\Uid\Uuid;
 #[Entity()]
 final class Ticket
 {
-    #[OneToOne(targetEntity: 'BookedTicketRecord', cascade: ['persist', 'remove'])]
+    #[OneToOne(targetEntity: BookedTicketRecord::class, cascade: ['persist', 'remove'])]
     private ?BookedTicketRecord $bookedTicketRecord = null;
 
     #[Id]
     #[Column(type: 'uuid')]
     private Uuid $id;
 
-    #[ManyToOne(targetEntity: 'Session', inversedBy: 'tickets')]
+    #[ManyToOne(targetEntity: Session::class, inversedBy: 'tickets')]
     private Session $session;
 
     public function __construct(

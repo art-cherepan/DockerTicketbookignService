@@ -33,7 +33,7 @@ class Session
     #[Column(type: 'datetime_immutable', nullable: false)]
     private DateTimeImmutable $endTime;
 
-    #[OneToMany(mappedBy: 'session', targetEntity: 'Ticket', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[OneToMany(mappedBy: 'session', targetEntity: Ticket::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $tickets;
 
     public function __construct(
