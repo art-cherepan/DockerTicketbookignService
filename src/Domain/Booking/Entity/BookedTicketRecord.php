@@ -15,15 +15,24 @@ use Symfony\Component\Uid\Uuid;
 #[Entity()]
 class BookedTicketRecord
 {
+    #[Id]
+    #[Column(type: 'uuid')]
+    private Uuid $id;
+
+    #[ManyToOne(targetEntity: Client::class, cascade: ['persist'], inversedBy: 'id')]
+    private Client $client;
+
+    #[OneToOne(targetEntity: Ticket::class)]
+    private Ticket $ticket;
+
     public function __construct(
-        #[Id]
-        #[Column(type: 'uuid')]
-        private Uuid $id,
-        #[ManyToOne(targetEntity: Client::class, cascade: ['persist'], inversedBy: 'id')]
-        private Client $client,
-        #[OneToOne(targetEntity: Ticket::class)]
-        private Ticket $ticket,
+        Uuid $id,
+        Client $client,
+        Ticket $ticket,
     ) {
+        $this->id = $id;
+        $this->client = $client;
+        $this->ticket = $ticket;
         $ticket->book($this);
     }
 

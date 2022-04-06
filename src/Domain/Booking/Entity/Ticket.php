@@ -2,7 +2,6 @@
 
 namespace App\Domain\Booking\Entity;
 
-use App\Domain\Booking\Repository\TicketRepository;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
@@ -10,19 +9,26 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToOne;
 use Symfony\Component\Uid\Uuid;
 
-#[Entity(repositoryClass: TicketRepository::class)]
+#[Entity()]
 final class Ticket
 {
     #[OneToOne(targetEntity: 'BookedTicketRecord', cascade: ['persist', 'remove'])]
     private ?BookedTicketRecord $bookedTicketRecord = null;
 
+    #[Id]
+    #[Column(type: 'uuid')]
+    private Uuid $id;
+
+    #[ManyToOne(targetEntity: 'Session', inversedBy: 'tickets')]
+    private Session $session;
+
     public function __construct(
-        #[Id]
-        #[Column(type: 'uuid')]
-        private Uuid $id,
-        #[ManyToOne(targetEntity: 'Session', inversedBy: 'tickets')]
-        private Session $session,
-    ) {}
+        Uuid $id,
+        Session $session,
+    ) {
+        $this->id = $id;
+        $this->session = $session;
+    }
 
     public function getId(): Uuid
     {

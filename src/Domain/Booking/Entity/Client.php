@@ -12,15 +12,25 @@ use Symfony\Component\Uid\Uuid;
 #[Entity()]
 final class Client
 {
+    #[Id]
+    #[Column(type: 'uuid')]
+    private Uuid $id;
+
+    #[Column(type: 'client_name', nullable: false)]
+    private ClientName $clientName;
+
+    #[Column(type: 'client_phone_number', nullable: false)]
+    private ClientPhoneNumber $phoneNumber;
+
     public function __construct(
-        #[Id]
-        #[Column(type: 'uuid')]
-        private Uuid $id,
-        #[Column(type: 'client_name', nullable: false)]
-        private ClientName $clientName,
-        #[Column(type: 'client_phone_number', nullable: false)]
-        private ClientPhoneNumber $phoneNumber,
-    ) {}
+        Uuid $id,
+        ClientName $clientName,
+        ClientPhoneNumber $phoneNumber,
+    ) {
+        $this->id = $id;
+        $this->clientName = $clientName;
+        $this->phoneNumber = $phoneNumber;
+    }
 
     public function getId(): Uuid
     {
