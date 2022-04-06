@@ -14,7 +14,7 @@ class SessionFixture extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $ticketCount = 10;
+        $ticketCount = 50;
 
         $id = new UuidV4();
         $filmName = 'Веном 1';
