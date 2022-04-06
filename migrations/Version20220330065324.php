@@ -16,75 +16,21 @@ final class Version20220330065324 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $this->addSql(
-            'CREATE TABLE booked_ticket_record (
-                    id BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid)\', 
-                    client_id BINARY(16) DEFAULT NULL COMMENT \'(DC2Type:uuid)\', 
-                    ticket_id BINARY(16) DEFAULT NULL COMMENT \'(DC2Type:uuid)\', 
-                    INDEX IDX_110826019EB6921 (client_id), 
-                    UNIQUE INDEX UNIQ_1108260700047D2 (ticket_id), 
-                    PRIMARY KEY(id)
-                ) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB'
-        );
+        $this->addSql($this->createBookedTicketRecordTable());
 
-        $this->addSql(
-            'CREATE TABLE client (
-                    id BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid)\', 
-                    client_name VARCHAR(255) NOT NULL, 
-                    phone_number VARCHAR(255) NOT NULL, 
-                    PRIMARY KEY(id)
-                ) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB'
-        );
+        $this->addSql($this->createClientTable());
 
-        $this->addSql(
-            'CREATE TABLE session (
-                    id BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid)\', 
-                    film_name VARCHAR(255) NOT NULL, 
-                    date DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', 
-                    start_time DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', 
-                    end_time DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', 
-                    PRIMARY KEY(id)
-                ) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB'
-        );
+        $this->addSql($this->createSessionTable());
 
-        $this->addSql(
-            'CREATE TABLE ticket (
-                    id BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid)\', 
-                    booked_ticket_record_id BINARY(16) DEFAULT NULL COMMENT \'(DC2Type:uuid)\', 
-                    session_id BINARY(16) DEFAULT NULL COMMENT \'(DC2Type:uuid)\', 
-                    UNIQUE INDEX UNIQ_97A0ADA33A94E4BC (booked_ticket_record_id), 
-                    INDEX IDX_97A0ADA3613FECDF (session_id), 
-                    PRIMARY KEY(id)
-                ) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB'
-        );
+        $this->addSql($this->createTicketTable());
 
-        $this->addSql(
-            'ALTER TABLE booked_ticket_record 
-                ADD CONSTRAINT FK_110826019EB6921 
-                FOREIGN KEY (client_id) 
-                REFERENCES client (id)'
-        );
+        $this->addSql($this->alterTableBookedTicketRecordReferencesClient());
 
-        $this->addSql(
-            'ALTER TABLE booked_ticket_record 
-                ADD CONSTRAINT FK_1108260700047D2
-                FOREIGN KEY (ticket_id)
-                REFERENCES ticket (id)'
-        );
+        $this->addSql($this->alterTableBookedTicketRecordReferencesTicket());
 
-        $this->addSql(
-            'ALTER TABLE ticket 
-                ADD CONSTRAINT FK_97A0ADA33A94E4BC
-                FOREIGN KEY (booked_ticket_record_id)
-                REFERENCES booked_ticket_record (id)'
-        );
+        $this->addSql($this->alterTableTicketReferencesBookedTicketRecord());
 
-        $this->addSql(
-            'ALTER TABLE ticket 
-                ADD CONSTRAINT FK_97A0ADA3613FECDF
-                FOREIGN KEY (session_id)
-                REFERENCES session (id)'
-        );
+        $this->addSql($this->alterTableTicketReferencesSession());
     }
 
     public function down(Schema $schema): void
@@ -104,5 +50,83 @@ final class Version20220330065324 extends AbstractMigration
         $this->addSql('DROP TABLE session');
 
         $this->addSql('DROP TABLE ticket');
+    }
+
+    private function createBookedTicketRecordTable(): string
+    {
+        return 'CREATE TABLE booked_ticket_record (
+                    id BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid)\', 
+                    client_id BINARY(16) DEFAULT NULL COMMENT \'(DC2Type:uuid)\', 
+                    ticket_id BINARY(16) DEFAULT NULL COMMENT \'(DC2Type:uuid)\', 
+                    INDEX IDX_110826019EB6921 (client_id), 
+                    UNIQUE INDEX UNIQ_1108260700047D2 (ticket_id), 
+                    PRIMARY KEY(id)
+                ) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB';
+    }
+
+    private function createClientTable(): string
+    {
+        return 'CREATE TABLE client (
+                    id BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid)\', 
+                    client_name VARCHAR(255) NOT NULL, 
+                    phone_number VARCHAR(255) NOT NULL, 
+                    PRIMARY KEY(id)
+                ) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB';
+    }
+
+    private function createSessionTable(): string
+    {
+        return 'CREATE TABLE session (
+                    id BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid)\', 
+                    film_name VARCHAR(255) NOT NULL, 
+                    date DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', 
+                    start_time DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', 
+                    end_time DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', 
+                    PRIMARY KEY(id)
+                ) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB';
+    }
+
+    private function createTicketTable(): string
+    {
+        return 'CREATE TABLE ticket (
+                    id BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid)\', 
+                    booked_ticket_record_id BINARY(16) DEFAULT NULL COMMENT \'(DC2Type:uuid)\', 
+                    session_id BINARY(16) DEFAULT NULL COMMENT \'(DC2Type:uuid)\', 
+                    UNIQUE INDEX UNIQ_97A0ADA33A94E4BC (booked_ticket_record_id), 
+                    INDEX IDX_97A0ADA3613FECDF (session_id), 
+                    PRIMARY KEY(id)
+                ) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB';
+    }
+
+    private function alterTableBookedTicketRecordReferencesClient(): string
+    {
+        return 'ALTER TABLE booked_ticket_record 
+                ADD CONSTRAINT FK_110826019EB6921 
+                FOREIGN KEY (client_id) 
+                REFERENCES client (id)';
+    }
+
+    private function alterTableBookedTicketRecordReferencesTicket(): string
+    {
+        return 'ALTER TABLE booked_ticket_record 
+                ADD CONSTRAINT FK_1108260700047D2
+                FOREIGN KEY (ticket_id)
+                REFERENCES ticket (id)';
+    }
+
+    private function alterTableTicketReferencesBookedTicketRecord(): string
+    {
+        return 'ALTER TABLE ticket 
+                ADD CONSTRAINT FK_97A0ADA33A94E4BC
+                FOREIGN KEY (booked_ticket_record_id)
+                REFERENCES booked_ticket_record (id)';
+    }
+
+    private function alterTableTicketReferencesSession(): string
+    {
+        return 'ALTER TABLE ticket 
+                ADD CONSTRAINT FK_97A0ADA3613FECDF
+                FOREIGN KEY (session_id)
+                REFERENCES session (id)';
     }
 }
