@@ -15,7 +15,7 @@ class BookTicketCommand
         message: 'The name must contain only Russian letters.',
     )]
     #[Assert\NotBlank]
-    public string $clientName;
+    public ?string $clientName = 'Иван';
 
     #[Assert\Regex(
         pattern: '/^[0-9]{10,10}+$/',
@@ -23,5 +23,5 @@ class BookTicketCommand
         message: 'Phone number must contain 10 digits.',
     )]
     #[Assert\NotBlank]
-    public string $clientPhoneNumber;
+    public ?string $clientPhoneNumber = '1234567891';
 }
