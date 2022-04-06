@@ -26,17 +26,14 @@ class BookTicketCommandHandler implements MessageHandlerInterface
      */
     public function __invoke(BookTicketCommand $command)
     {
-        $clientName = $command->clientName;
-        $clientPhoneNumber = $command->clientPhoneNumber;
+        $clientName = new ClientName($command->clientName);
+        $clientPhoneNumber = new ClientPhoneNumber($command->clientPhoneNumber);
 
-        $clientNameDBType = new ClientName($clientName);
-        $clientPhoneNumberDBType = new ClientPhoneNumber($clientPhoneNumber);
+        $client = $this->getClient($clientName, $clientPhoneNumber);
 
         $session = $command->session;
 
         $ticket = $session->getFreeTicket();
-
-        $client = $this->getClient($clientNameDBType, $clientPhoneNumberDBType);
 
         $session->bookTicket($client, $ticket);
     }
