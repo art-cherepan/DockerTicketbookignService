@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BookTicketController extends AbstractController
 {
-    #[Route('/main', name: 'main')]
+    #[Route('/', name: 'main')]
     public function bookTicket(Request $request, MessageBusInterface $commandBus, SessionRepository $sessionRepository): Response
     {
         $sessions = $sessionRepository->findAll();
