@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping\OneToOne;
 use Symfony\Component\Uid\Uuid;
 
 #[Entity()]
-final class Ticket
+class Ticket
 {
     #[OneToOne(targetEntity: BookedTicketRecord::class, cascade: ['persist', 'remove'])]
     private ?BookedTicketRecord $bookedTicketRecord = null;
