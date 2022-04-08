@@ -152,6 +152,9 @@
     "laravel/serializable-closure": {
         "version": "v1.1.1"
     },
+    "liip/test-fixtures-bundle": {
+        "version": "2.3.0"
+    },
     "monolog/monolog": {
         "version": "2.4.0"
     },
