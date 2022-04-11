@@ -6,7 +6,6 @@ use App\Domain\Booking\Entity\Client;
 use App\Domain\Booking\Entity\Session;
 use App\Domain\Booking\Entity\Ticket;
 use DateTimeImmutable;
-use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\UuidV4;
 
@@ -24,13 +23,6 @@ class SessionTest extends TestCase
             new DateTimeImmutable('2022-04-01 22:30:00'),
             20,
         );
-    }
-
-    public function testCreatingTickets(): void
-    {
-        $tickets = $this->session->getTickets();
-
-        $this->assertInstanceOf(ArrayCollection::class, $tickets);
     }
 
     public function testGetCountTickets(): void
