@@ -3,6 +3,8 @@
 namespace App\Tests\Unit;
 
 use App\Domain\Booking\Entity\Client;
+use App\Domain\Booking\Entity\Exception\EmptySessionException;
+use App\Domain\Booking\Entity\Exception\NonFreeTicketsException;
 use App\Domain\Booking\Entity\Session;
 use App\Domain\Booking\Entity\Ticket;
 use DateTimeImmutable;
@@ -57,5 +59,45 @@ class SessionTest extends TestCase
     public function testGetFreeTicket(): void
     {
         self::assertInstanceOf(Ticket::class, $this->session->getFreeTicket());
+    }
+
+    public function testGetFreeTicketInSessionWithoutTickets(): void
+    {
+        self::expectException(NonFreeTicketsException::class);
+
+        $numberOfTickets = 1;
+
+        $session = new Session(
+            new UuidV4(),
+            'Веном 1',
+            new DateTimeImmutable('2022-04-01'),
+            new DateTimeImmutable('2022-04-01 20:00:00'),
+            new DateTimeImmutable('2022-04-01 22:30:00'),
+            $numberOfTickets,
+        );
+
+        $clientStub = $this->createStub(Client::class);
+
+        $ticketOne = $session->getFreeTicket();
+
+        $session->bookTicket($clientStub, $ticketOne);
+
+        $session->getFreeTicket();
+    }
+
+    public function testPassZeroTicketsToTheSession(): void
+    {
+        self::expectException(EmptySessionException::class);
+
+        $numberOfTickets = 0;
+
+        new Session(
+            new UuidV4(),
+            'Веном 1',
+            new DateTimeImmutable('2022-04-01'),
+            new DateTimeImmutable('2022-04-01 20:00:00'),
+            new DateTimeImmutable('2022-04-01 22:30:00'),
+            $numberOfTickets,
+        );
     }
 }
