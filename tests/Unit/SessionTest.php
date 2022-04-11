@@ -47,10 +47,11 @@ class SessionTest extends TestCase
     {
         $clientStub = $this->createStub(Client::class);
 
-        $ticketMock = $this->createMock(Ticket::class);
-        $ticketMock->expects($this->atLeastOnce())->method('book');
+        $ticket = $this->session->getFreeTicket();
 
-        $this->session->bookTicket($clientStub, $ticketMock);
+        $this->session->bookTicket($clientStub, $ticket);
+
+        self::assertTrue($ticket->isBooked());
     }
 
     public function testGetFreeTicket(): void
