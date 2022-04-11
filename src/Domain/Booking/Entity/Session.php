@@ -92,9 +92,11 @@ class Session
 
     public function getFreeTicket(): Ticket
     {
-        self::assertSessionHasAvailableTickets($this);
-
         $freeTickets = $this->getFreeTickets();
+
+        if (count($freeTickets) === 0) {
+            throw new NonFreeTicketsException();
+        }
 
         return $freeTickets->first();
     }
@@ -131,12 +133,5 @@ class Session
         }
 
         return false;
-    }
-
-    private static function assertSessionHasAvailableTickets(Session $session): void
-    {
-        if ($session->hasAFreeTicket() === false) {
-            throw new NonFreeTicketsException();
-        }
     }
 }
