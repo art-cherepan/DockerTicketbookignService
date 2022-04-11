@@ -40,7 +40,7 @@ class SessionTest extends TestCase
 
         $tickets = $session->getTickets();
 
-        $this->assertEquals($expectedNumberOfTickets, count($tickets));
+        self::assertEquals($expectedNumberOfTickets, count($tickets));
     }
 
     public function testBookTicket(): void
@@ -56,6 +56,6 @@ class SessionTest extends TestCase
 
     public function testGetFreeTicket(): void
     {
-        $this->assertInstanceOf(Ticket::class, $this->session->getFreeTicket());
+        self::assertInstanceOf(Ticket::class, $this->session->getFreeTicket());
     }
 }

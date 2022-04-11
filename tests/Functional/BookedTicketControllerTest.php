@@ -29,7 +29,7 @@ class BookedTicketControllerTest extends WebTestCase
     public function testMainPageIsAvailable(): void
     {
         $this->client->request('GET', '/');
-        $this->assertResponseIsSuccessful();
+        self::assertResponseIsSuccessful();
     }
 
     public function testBookTicket(): void
@@ -48,6 +48,6 @@ class BookedTicketControllerTest extends WebTestCase
             'book_session_form[session]' => $sessionId,
         ]);
 
-        $this->assertResponseIsSuccessful();
+        self::assertResponseIsSuccessful();
     }
 }
