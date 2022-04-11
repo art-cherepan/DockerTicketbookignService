@@ -2,6 +2,7 @@
 
 namespace App\Domain\Booking\Entity;
 
+use App\Domain\Booking\Entity\Exception\EmptySessionException;
 use App\Domain\Booking\Entity\Exception\NonFreeTicketsException;
 use App\Domain\Booking\Repository\SessionRepository;
 use DateTimeImmutable;
@@ -42,14 +43,14 @@ class Session
         DateTimeImmutable $date,
         DateTimeImmutable $startTime,
         DateTimeImmutable $endTime,
-        private int $ticketCount,
+        int $ticketCount,
     ) {
         $this->id = $id;
         $this->filmName = $filmName;
         $this->date = $date;
         $this->startTime = $startTime;
         $this->endTime = $endTime;
-        $this->tickets = $this->createTickets();
+        $this->tickets = $this->createTickets($ticketCount);
     }
 
     public function getId(): Uuid
@@ -98,11 +99,15 @@ class Session
         return $freeTickets->first();
     }
 
-    private function createTickets(): ArrayCollection
+    private function createTickets(int $ticketCount): ArrayCollection
     {
+        if ($ticketCount === 0) {
+            throw new EmptySessionException();
+        }
+
         $tickets = [];
 
-        for ($i = 0; $i < $this->ticketCount; $i++) {
+        for ($i = 0; $i < $ticketCount; $i++) {
             $ticket = new Ticket(Uuid::v4(), $this);
             $tickets[] = $ticket;
         }
