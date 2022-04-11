@@ -27,9 +27,20 @@ class SessionTest extends TestCase
 
     public function testGetCountTickets(): void
     {
-        $tickets = $this->session->getTickets();
+        $expectedNumberOfTickets = 20;
 
-        $this->assertEquals(20, count($tickets));
+        $session = new Session(
+            new UuidV4(),
+            'Веном 1',
+            new DateTimeImmutable('2022-04-01'),
+            new DateTimeImmutable('2022-04-01 20:00:00'),
+            new DateTimeImmutable('2022-04-01 22:30:00'),
+            $expectedNumberOfTickets,
+        );
+
+        $tickets = $session->getTickets();
+
+        $this->assertEquals($expectedNumberOfTickets, count($tickets));
     }
 
     public function testBookTicket(): void
