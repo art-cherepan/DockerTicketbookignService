@@ -124,17 +124,4 @@ class Session
 
         return new ArrayCollection($tickets);
     }
-
-    private function hasAFreeTicket(): bool
-    {
-        $tickets = $this->getTickets();
-
-        foreach ($tickets as $ticket) {
-            if ($ticket->isBooked() === false) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 }
