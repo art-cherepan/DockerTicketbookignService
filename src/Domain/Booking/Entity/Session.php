@@ -94,9 +94,14 @@ class Session
     {
         self::assertSessionHasAvailableTickets($this);
 
-        $freeTickets = $this->getTickets()->filter(static fn (Ticket $ticket) => !$ticket->isBooked());
+        $freeTickets = $this->getFreeTickets();
 
         return $freeTickets->first();
+    }
+
+    private function getFreeTickets(): Collection
+    {
+        return $this->getTickets()->filter(static fn (Ticket $ticket) => !$ticket->isBooked());
     }
 
     private function createTickets(int $ticketCount): ArrayCollection
