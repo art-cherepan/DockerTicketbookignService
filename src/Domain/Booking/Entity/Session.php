@@ -16,6 +16,9 @@ use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Uid\UuidV4;
 
 #[Entity(repositoryClass: SessionRepository::class)]
+/**
+ * @final
+ */
 class Session
 {
     #[Id]

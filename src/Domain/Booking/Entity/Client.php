@@ -10,6 +10,9 @@ use Doctrine\ORM\Mapping\Id;
 use Symfony\Component\Uid\Uuid;
 
 #[Entity()]
+/**
+ * @final
+ */
 class Client
 {
     #[Id]

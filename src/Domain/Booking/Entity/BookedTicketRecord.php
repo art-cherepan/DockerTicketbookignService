@@ -13,6 +13,9 @@ use Doctrine\ORM\Mapping\OneToOne;
 use Symfony\Component\Uid\Uuid;
 
 #[Entity()]
+/**
+ * @final
+ */
 class BookedTicketRecord
 {
     #[Id]
