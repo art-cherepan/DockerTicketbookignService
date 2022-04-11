@@ -17,6 +17,8 @@ class SessionTest extends TestCase
 
     public function setUp(): void
     {
+        parent::setUp();
+
         $this->session = new Session(
             new UuidV4(),
             'Веном 1',
