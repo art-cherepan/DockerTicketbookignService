@@ -3,7 +3,9 @@
         <body>
             {{ form_start(form) }}
                 {{ form_widget(form) }}
+                <input type="submit" name="submit" value="Забронировать">
             {{ form_end(form) }}
+
 
             {% for message in app.flashes('notice') %}
                 <div class="flash-notice">

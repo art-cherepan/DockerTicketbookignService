@@ -43,7 +43,7 @@ class BookedTicketControllerTest extends WebTestCase
         $sessionId = $session->getId();
 
         $this->client->request('GET', 'http://localhost/');
-        $this->client->submitForm('book_session_form[submit]', [
+        $this->client->submitForm('submit', [
             'book_session_form[clientName]' => 'Олег',
             'book_session_form[clientPhoneNumber]' => '1234567888',
             'book_session_form[session]' => $sessionId,

@@ -6,7 +6,6 @@ use App\Domain\Booking\Command\BookTicketCommand;
 use App\Domain\Booking\Entity\Session;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -35,9 +34,6 @@ class BookSessionFormType extends AbstractType
                 'choice_label' => static fn (Session $session) => $session->getFilmName() . ' Начало фильма: ' .
                     gmdate('Y-m-d H:i:s', $session->getStartTime()->getTimeStamp()),
                 'choices' => $sessions,
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'Отправить',
             ]);
     }
 
