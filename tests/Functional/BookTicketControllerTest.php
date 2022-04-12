@@ -4,7 +4,6 @@ namespace App\Tests\Functional;
 
 use App\Domain\Booking\Entity\Session;
 use App\Fixture\SessionFixture;
-use Doctrine\ORM\EntityManagerInterface;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -20,7 +19,6 @@ class BookTicketControllerTest extends WebTestCase
         $this->client = static::createClient();
 
         $this->databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
-        $this->entityManager = self::getContainer()->get(EntityManagerInterface::class);
     }
 
     public function testMainPageIsAvailable(): void
