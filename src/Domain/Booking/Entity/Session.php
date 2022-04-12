@@ -88,6 +88,9 @@ class Session
 
     public function bookTicket(Client $client, Ticket $ticket): void
     {
+        assert($ticket->getSession() === $this);
+        assert($ticket->isBooked() === false);
+
         $uuid = new UuidV4();
         $bookedTicketRecord = new BookedTicketRecord($uuid, $client, $ticket);
         $ticket->book($bookedTicketRecord);
