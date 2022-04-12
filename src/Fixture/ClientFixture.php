@@ -9,7 +9,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Uid\Uuid;
 
-class ClientFixture extends Fixture
+final class ClientFixture extends Fixture
 {
     private const REFERENCE = 'client';
 

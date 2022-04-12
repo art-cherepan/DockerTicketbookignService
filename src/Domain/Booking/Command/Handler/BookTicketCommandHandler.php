@@ -11,7 +11,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Uid\UuidV4;
 
-class BookTicketCommandHandler implements MessageHandlerInterface
+final class BookTicketCommandHandler implements MessageHandlerInterface
 {
     private ClientRepository $clientRepository;
 

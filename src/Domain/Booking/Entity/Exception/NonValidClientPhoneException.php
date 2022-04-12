@@ -2,7 +2,7 @@
 
 namespace App\Domain\Booking\Entity\Exception;
 
-class NonValidClientPhoneException extends \DomainException
+final class NonValidClientPhoneException extends \DomainException
 {
     public function __construct(string $nonValidPhone)
     {

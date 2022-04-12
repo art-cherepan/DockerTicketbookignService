@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-class BookTicketController extends AbstractController
+final class BookTicketController extends AbstractController
 {
     #[Route('/', name: 'main')]
     public function bookTicket(Request $request, MessageBusInterface $commandBus, SessionRepository $sessionRepository): Response

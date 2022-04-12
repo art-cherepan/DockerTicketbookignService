@@ -8,7 +8,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Uid\UuidV4;
 
-class SessionFixture extends Fixture
+final class SessionFixture extends Fixture
 {
     public const REFERENCE_SESSION = 'session';
 

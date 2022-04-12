@@ -2,7 +2,7 @@
 
 namespace App\Domain\Booking\Entity\Exception;
 
-class NonValidClientNameException extends \DomainException
+final class NonValidClientNameException extends \DomainException
 {
     public function __construct(string $nonValidName)
     {

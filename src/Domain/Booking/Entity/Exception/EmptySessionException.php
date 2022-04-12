@@ -2,7 +2,7 @@
 
 namespace App\Domain\Booking\Entity\Exception;
 
-class EmptySessionException extends \DomainException
+final class EmptySessionException extends \DomainException
 {
     public function __construct()
     {
