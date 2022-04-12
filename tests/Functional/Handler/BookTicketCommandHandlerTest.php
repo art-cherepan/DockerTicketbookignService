@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Tests\Functional\Handler;
+
+use App\Domain\Booking\Command\BookTicketCommand;
+use App\Domain\Booking\Entity\BookedTicketRecord;
+use App\Domain\Booking\Entity\Client;
+use App\Domain\Booking\Entity\Session;
+use App\Domain\Booking\Entity\ValueObject\ClientName;
+use App\Domain\Booking\Entity\ValueObject\ClientPhoneNumber;
+use App\Fixture\SessionFixture;
+use Doctrine\ORM\EntityManagerInterface;
+use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
+use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+class BookTicketCommandHandlerTest extends WebTestCase
+{
+    private AbstractDatabaseTool $databaseTool;
+    private EntityManagerInterface $entityManager;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
+        $this->entityManager = self::getContainer()->get(EntityManagerInterface::class);
+    }
+
+    public function testCommandExecute(): void
+    {
+        $clientName = 'Иван';
+        $clientPhoneNumber = '1234567891';
+
+        $referenceRepository = $this->databaseTool
+            ->loadFixtures([SessionFixture::class])
+            ->getReferenceRepository();
+
+        $session = $referenceRepository->getReference(SessionFixture::REFERENCE_SESSION);
+        assert($session instanceof Session);
+
+        $command = new BookTicketCommand();
+
+        $command->session = $session;
+        $command->clientName = $clientName;
+        $command->clientPhoneNumber = $clientPhoneNumber;
+
+        $commandBus = $this->getContainer()->get('debug.traced.command_bus');
+
+        $commandBus->dispatch($command);
+
+        $clientRepository = $this->entityManager->getRepository(Client::class);
+        $bookedTicketRecordRepository = $this->entityManager->getRepository(BookedTicketRecord::class);
+
+        $client = $clientRepository->findOneBy([
+            'clientName' => new ClientName($clientName),
+            'phoneNumber' => new ClientPhoneNumber($clientPhoneNumber),
+        ]);
+
+        self::assertInstanceOf(Client::class, $client);
+
+        $bookedTicketRecord = $bookedTicketRecordRepository->findOneBy([
+            'client' => $client,
+        ]);
+
+        self::assertInstanceOf(BookedTicketRecord::class, $bookedTicketRecord);
+    }
+}
