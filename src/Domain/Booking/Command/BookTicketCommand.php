@@ -20,7 +20,7 @@ final class BookTicketCommand
     #[Assert\Regex(
         pattern: '/^[0-9]{10,10}+$/',
         match: true,
-        message: 'Phone number must contain 10 digits.',
+        message: 'The number must be 10 digits long and must not include the following characters: \'+\' \'-\' \'*\'',
     )]
     #[Assert\NotBlank]
     public ?string $clientPhoneNumber = '1234567891';
