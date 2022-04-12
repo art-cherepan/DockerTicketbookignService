@@ -35,10 +35,6 @@ class BookedTicketControllerTest extends WebTestCase
 
     public function testBookTicket(): void
     {
-        $this->databaseTool->loadFixtures(
-            [SessionFixture::class],
-        );
-
         $referenceRepository = $this->databaseTool
             ->loadFixtures([SessionFixture::class])
             ->getReferenceRepository();
@@ -48,8 +44,8 @@ class BookedTicketControllerTest extends WebTestCase
 
         $this->client->request('GET', 'http://localhost/');
         $this->client->submitForm('submit', [
-            'book_session_form[clientName]' => 'Олег',
-            'book_session_form[clientPhoneNumber]' => '1234567888',
+            'book_session_form[clientName]' => 'Андрей',
+            'book_session_form[clientPhoneNumber]' => '1234567889',
             'book_session_form[session]' => $session->getId(),
         ]);
 
