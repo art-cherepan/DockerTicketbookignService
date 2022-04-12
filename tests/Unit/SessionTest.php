@@ -2,15 +2,16 @@
 
 namespace App\Tests\Unit;
 
+use App\Domain\Booking\Entity\BookedTicketRecord;
 use App\Domain\Booking\Entity\Client;
 use App\Domain\Booking\Entity\Exception\EmptySessionException;
 use App\Domain\Booking\Entity\Exception\NonFreeTicketsException;
 use App\Domain\Booking\Entity\Session;
 use App\Domain\Booking\Entity\Ticket;
+use AssertionError;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\UuidV4;
-use AssertionError;
 
 class SessionTest extends TestCase
 {
@@ -133,5 +134,31 @@ class SessionTest extends TestCase
         $ticket = $sessionOne->getFreeTicket();
 
         $sessionTwo->bookTicket($clientStub, $ticket);
+    }
+
+    public function testBookBookedTicket(): void
+    {
+        self::expectException(AssertionError::class);
+
+        $numberOfTickets = 5;
+
+        $session = new Session(
+            new UuidV4(),
+            'Веном 1',
+            new DateTimeImmutable('2022-04-01'),
+            new DateTimeImmutable('2022-04-01 20:00:00'),
+            new DateTimeImmutable('2022-04-01 22:30:00'),
+            $numberOfTickets,
+        );
+
+        $clientStub = $this->createStub(Client::class);
+
+        $ticketStub = $this->createStub(Ticket::class);
+
+        $bookedTicketRecordStub = $this->createStub(BookedTicketRecord::class);
+
+        $ticketStub->book($bookedTicketRecordStub);
+
+        $session->bookTicket($clientStub, $ticketStub);
     }
 }
