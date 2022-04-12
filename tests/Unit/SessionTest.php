@@ -10,6 +10,7 @@ use App\Domain\Booking\Entity\Ticket;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\UuidV4;
+use AssertionError;
 
 class SessionTest extends TestCase
 {
@@ -101,5 +102,36 @@ class SessionTest extends TestCase
             new DateTimeImmutable('2022-04-01 22:30:00'),
             $numberOfTickets,
         );
+    }
+
+    public function testBookTicketInAnotherSession(): void
+    {
+        self::expectException(AssertionError::class);
+
+        $numberOfTickets = 5;
+
+        $sessionOne = new Session(
+            new UuidV4(),
+            'Веном 1',
+            new DateTimeImmutable('2022-04-01'),
+            new DateTimeImmutable('2022-04-01 20:00:00'),
+            new DateTimeImmutable('2022-04-01 22:30:00'),
+            $numberOfTickets,
+        );
+
+        $sessionTwo = new Session(
+            new UuidV4(),
+            'Веном 1',
+            new DateTimeImmutable('2022-04-01'),
+            new DateTimeImmutable('2022-04-01 20:00:00'),
+            new DateTimeImmutable('2022-04-01 22:30:00'),
+            $numberOfTickets,
+        );
+
+        $clientStub = $this->createStub(Client::class);
+
+        $ticket = $sessionOne->getFreeTicket();
+
+        $sessionTwo->bookTicket($clientStub, $ticket);
     }
 }
