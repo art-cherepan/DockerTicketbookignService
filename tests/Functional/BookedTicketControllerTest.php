@@ -39,7 +39,13 @@ class BookedTicketControllerTest extends WebTestCase
             [SessionFixture::class],
         );
 
-        $session = $this->entityManager->getRepository(Session::class)->findOneBy(['filmName' => 'Веном 1']);
+        $referenceRepository = $this->databaseTool
+            ->loadFixtures([SessionFixture::class])
+            ->getReferenceRepository();
+
+        $session = $referenceRepository->getReference(SessionFixture::REFERENCE_SESSION);
+        assert($session instanceof Session);
+
         $sessionId = $session->getId();
 
         $this->client->request('GET', 'http://localhost/');

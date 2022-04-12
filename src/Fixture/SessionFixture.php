@@ -10,7 +10,7 @@ use Symfony\Component\Uid\UuidV4;
 
 class SessionFixture extends Fixture
 {
-    private const REFERENCE_SESSION = 'session';
+    public const REFERENCE_SESSION = 'session';
 
     public function load(ObjectManager $manager): void
     {
