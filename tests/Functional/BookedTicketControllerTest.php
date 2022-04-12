@@ -46,13 +46,11 @@ class BookedTicketControllerTest extends WebTestCase
         $session = $referenceRepository->getReference(SessionFixture::REFERENCE_SESSION);
         assert($session instanceof Session);
 
-        $sessionId = $session->getId();
-
         $this->client->request('GET', 'http://localhost/');
         $this->client->submitForm('submit', [
             'book_session_form[clientName]' => 'Олег',
             'book_session_form[clientPhoneNumber]' => '1234567888',
-            'book_session_form[session]' => $sessionId,
+            'book_session_form[session]' => $session->getId(),
         ]);
 
         self::assertResponseIsSuccessful();
