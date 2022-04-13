@@ -24,9 +24,11 @@ final class BookSessionFormType extends AbstractType
         $builder
             ->add('clientName', TextType::class, [
                 'label' => 'Введите ваше имя: ',
+                'attr' => ['class' => 'mt-2 mb-2'],
             ])
             ->add('clientPhoneNumber', TextType::class, [
                 'label' => 'Введите номер телефона: ',
+                'attr' => ['class' => 'mt-2 mb-2'],
             ])
             ->add('session', EntityType::class, [
                 'label' => 'Выберите сеанс: ',
@@ -34,6 +36,7 @@ final class BookSessionFormType extends AbstractType
                 'choice_label' => static fn (Session $session) => $session->getFilmName() . ' Начало фильма: ' .
                     gmdate('Y-m-d H:i:s', $session->getStartTime()->getTimeStamp()),
                 'choices' => $sessions,
+                'attr' => ['class' => 'mt-2 mb-2'],
             ]);
     }
 
