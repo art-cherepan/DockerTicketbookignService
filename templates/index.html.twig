@@ -1,17 +1,25 @@
 <html>
-    <head>
-        <body>
-            {{ form_start(form) }}
-                {{ form_widget(form) }}
-                <input type="submit" name="submit" value="Забронировать">
-            {{ form_end(form) }}
-
-
-            {% for message in app.flashes('notice') %}
-                <div class="flash-notice">
-                    {{ message }}
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container alert alert-success mt-3">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="d-flex justify-content-center">
+                    <h1>Сервис бронирования билетов</h1>
                 </div>
-            {% endfor %}
-        </body>
-    </head>
+                    {{ form_start(form) }}
+                        {{ form_widget(form, { attr: { 'class': 'pb-2' }}) }}
+                        <button type="submit" name="submit" class="btn btn-primary">Забронировать</button>
+                    {{ form_end(form) }}
+            </div>
+        </div>
+        {% for message in app.flashes('notice') %}
+            <div class="flash-notice">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+</body>
 </html>
