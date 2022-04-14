@@ -8,11 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class ClientPhoneNumberTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function testInvalidClientPhoneNumber(): void
     {
         self::expectException(NonValidClientPhoneException::class);

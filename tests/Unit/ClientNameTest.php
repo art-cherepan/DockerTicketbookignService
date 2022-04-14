@@ -8,11 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class ClientNameTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function testInvalidClientName(): void
     {
         self::expectException(NonValidClientNameException::class);
