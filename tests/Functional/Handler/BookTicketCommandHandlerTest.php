@@ -36,9 +36,6 @@ class BookTicketCommandHandlerTest extends WebTestCase
 
     public function testCommandExecute(): void
     {
-        $clientName = 'Иван';
-        $clientPhoneNumber = '1234567891';
-
         $referenceRepository = $this->databaseTool
             ->loadFixtures([SessionFixture::class])
             ->getReferenceRepository();
@@ -49,16 +46,16 @@ class BookTicketCommandHandlerTest extends WebTestCase
         $command = new BookTicketCommand();
 
         $command->session = $session;
-        $command->clientName = $clientName;
-        $command->clientPhoneNumber = $clientPhoneNumber;
+        $command->clientName = 'Иван';
+        $command->clientPhoneNumber = '1234567891';
 
         $commandBus = $this->getContainer()->get('debug.traced.command_bus');
 
         $commandBus->dispatch($command);
 
         $client = $this->clientRepository->findOneBy([
-            'clientName' => new ClientName($clientName),
-            'phoneNumber' => new ClientPhoneNumber($clientPhoneNumber),
+            'clientName' => new ClientName($command->clientName),
+            'phoneNumber' => new ClientPhoneNumber($command->clientPhoneNumber),
         ]);
 
         self::assertInstanceOf(Client::class, $client);
