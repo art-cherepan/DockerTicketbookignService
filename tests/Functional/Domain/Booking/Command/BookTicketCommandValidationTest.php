@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Functional\Command;
+namespace App\Tests\Functional\Domain\Booking\Command;
 
 use App\Domain\Booking\Command\BookTicketCommand;
 use App\Tests\Functional\ViolationAssertTrait;
