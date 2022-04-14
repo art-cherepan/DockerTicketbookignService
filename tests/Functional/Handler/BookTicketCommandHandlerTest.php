@@ -8,6 +8,8 @@ use App\Domain\Booking\Entity\Client;
 use App\Domain\Booking\Entity\Session;
 use App\Domain\Booking\Entity\ValueObject\ClientName;
 use App\Domain\Booking\Entity\ValueObject\ClientPhoneNumber;
+use App\Domain\Booking\Repository\BookedTicketRecordRepository;
+use App\Domain\Booking\Repository\ClientRepository;
 use App\Fixture\SessionFixture;
 use Doctrine\ORM\EntityManagerInterface;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
@@ -18,6 +20,8 @@ class BookTicketCommandHandlerTest extends WebTestCase
 {
     private AbstractDatabaseTool $databaseTool;
     private EntityManagerInterface $entityManager;
+    private ClientRepository $clientRepository;
+    private BookedTicketRecordRepository $bookedTicketRecordRepository;
 
     protected function setUp(): void
     {
@@ -25,6 +29,9 @@ class BookTicketCommandHandlerTest extends WebTestCase
 
         $this->databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
         $this->entityManager = self::getContainer()->get(EntityManagerInterface::class);
+
+        $this->clientRepository = $this->entityManager->getRepository(Client::class);
+        $this->bookedTicketRecordRepository = $this->entityManager->getRepository(BookedTicketRecord::class);
     }
 
     public function testCommandExecute(): void
@@ -49,17 +56,14 @@ class BookTicketCommandHandlerTest extends WebTestCase
 
         $commandBus->dispatch($command);
 
-        $clientRepository = $this->entityManager->getRepository(Client::class);
-        $bookedTicketRecordRepository = $this->entityManager->getRepository(BookedTicketRecord::class);
-
-        $client = $clientRepository->findOneBy([
+        $client = $this->clientRepository->findOneBy([
             'clientName' => new ClientName($clientName),
             'phoneNumber' => new ClientPhoneNumber($clientPhoneNumber),
         ]);
 
         self::assertInstanceOf(Client::class, $client);
 
-        $bookedTicketRecord = $bookedTicketRecordRepository->findOneBy([
+        $bookedTicketRecord = $this->bookedTicketRecordRepository->findOneBy([
             'client' => $client,
         ]);
 
