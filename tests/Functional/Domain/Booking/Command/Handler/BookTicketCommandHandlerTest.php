@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Functional\Handler;
+namespace App\Tests\Functional\Domain\Booking\Command\Handler;
 
 use App\Domain\Booking\Command\BookTicketCommand;
 use App\Domain\Booking\Entity\BookedTicketRecord;
