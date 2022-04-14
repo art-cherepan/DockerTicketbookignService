@@ -54,6 +54,10 @@ class Session
         $this->startTime = $startTime;
         $this->endTime = $endTime;
         $this->tickets = $this->createTickets($ticketCount);
+
+        if ($ticketCount === 0) {
+            throw new EmptySessionException();
+        }
     }
 
     public function getId(): Uuid
@@ -114,10 +118,6 @@ class Session
 
     private function createTickets(int $ticketCount): ArrayCollection
     {
-        if ($ticketCount === 0) {
-            throw new EmptySessionException();
-        }
-
         $tickets = [];
 
         for ($i = 0; $i < $ticketCount; $i++) {
